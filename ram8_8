@@ -1,0 +1,25 @@
+
+module ram8_8(
+  input clk ,rst,wr_enb,rd_enb,
+  input [3:0] wr_addr,rd_addr,input [7:0] data_in,
+  output reg [7:0] data_out
+);
+  
+  reg [7:0] mem[7:0];//create one internal memory 
+  
+  always @(posedge clk or rst)
+    begin 
+      if(rst) begin
+        for(int i=0;i< 7;i= i+1)
+              mem[i]<=0;
+      end
+      
+      else
+        if (wr_enb)
+          mem[wr_addr]<=data_in;
+      
+      else if (wr_enb==0)
+        data_out=mem[rd_addr];     
+    end
+          
+endmodule
